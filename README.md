@@ -1,6 +1,6 @@
 # openclaw_computer
 
-一个预装 OpenClaw 并具有桌面环境的 Linux 容器，适配 ModelScope、HuggingFace 等免费容器部署服务，通过浏览器即可在安全的隔离环境下玩转 OpenClaw
+一个预装 OpenClaw 并具有桌面环境的 Linux 容器，适配 ModelScope、HuggingFace 等免费容器部署服务，通过浏览器即可在安全的隔离环境下畅玩 OpenClaw
 
 ## 通过本项目，你将获得：
 - 💻 一台硬件配置至少为2核/16GB内存的 Linux 云电脑（在 ModelScope/HuggingFace 开源社区部署时）
@@ -8,28 +8,6 @@
 - 🚀 开箱即用的 OpenClaw，默认配置 ModelScope 免费模型推理后端，提供密钥即可畅玩
 - 🧪 在安全的隔离环境中尽情体验 OpenClaw
 - 🔄 OpenClaw 配置文件自动备份/恢复
-
-## 运行容器（ModelScope/HuggingFace Spaces）
-
-#### ModelScope 部署教程：
-- [📝 文字版（点击查看）](https://mp.weixin.qq.com/s/gAQs3Zl9ohkcSFmQcd-Z-Q)
-- [🎬 视频版（点击查看）](https://www.bilibili.com/video/BV1HQwtzuEmw)
-- 使用 **QwenPaw 版镜像** 教程：
-    1. 参照上述文字/视频教程完成部署
-    2. 部署后，编辑“空间文件”下的`Dockerfile`文件，将首行代码`FROM ghcr.io/tunmax/openclaw_computer:latest`修改为`FROM ghcr.io/tunmax/openclaw_computer:qwenpaw_latest`，然后在页面底部点击“提交修改”
-    3. 最后，在“设置”中点击“深度重启”即可
-- 使用 **Hermes 版镜像** 教程：
-    1. 操作同 **QwenPaw 版镜像** 教程，仅需将`Dockerfile`文件首行最后的`:latest`改为`:hermes_latest`
-
-
-#### HuggingFace 部署教程：
-- 在 Spaces 仓库目录下添加 Dockerfile 文件，内容和本仓库中的文件一致，然后在“设置”中添加 `ROOT_PASSWD` 和 `MODELSCOPE_API_KEY` 两个环境变量，最后点击重启容器即可开始部署。
-- 将 Bucket 挂载在 `/mnt/workspace` 路径下可激活本地自动备份/恢复特性
-- > 📌 注意：HuggingFace 似乎已不允许在免费硬件（CPU basic, 2vCPU 16GB RAM）的容器上部署 OpenClaw，当检测到容器内存在 OpenClaw 进程时会自动暂停容器，也无法重新启动容器（会出现 503 错误），预计需要切换至付费硬件（CPU upgrade, 8 vCPU 32GB RAM）才能继续使用。  
-  > 目前仅旧版 CoPaw 版镜像仍可以在 HF 的免费容器上部署，需将 Dockerfile 的首行代码改为 `FROM ghcr.io/tunmax/openclaw_computer:copaw_latest` 
-
-#### ⚠️ 重要提醒
-在开源社区部署本容器时，请勿启动内网穿透相关服务，根据有关反馈和真实案例，HuggingFace Spaces 具备检测容器内是否运行内网穿透服务的能力，一旦检测到此类情况，容器将会被立即删除，相关账号也会面临被封禁的风险。对于 ModelScope Spaces 也请勿运行内网穿透相关服务。本容器仅用于 OpenClaw 的体验。
 
 ## 运行容器（本地环境）
 
@@ -43,6 +21,28 @@ docker run -d \
 - 激活自动备份/恢复特性：`docker run ... -v ./backups:/mnt/workspace ...`
 - **使用 QwenPaw 版本**：`docker run ... ghcr.io/tunmax/openclaw_computer:qwenpaw_latest`
 - **使用 Hermes 版本**：`docker run ... ghcr.io/tunmax/openclaw_computer:hermes_latest`
+
+## 运行容器（ModelScope/HuggingFace Spaces）
+
+#### ModelScope 部署教程：
+- [📝 文字版（点击查看）](https://mp.weixin.qq.com/s/gAQs3Zl9ohkcSFmQcd-Z-Q)
+- [🎬 视频版（点击查看）](https://www.bilibili.com/video/BV1HQwtzuEmw)
+- 切换使用 **QwenPaw 版镜像**：
+    1. 参照上述文字/视频教程完成部署
+    2. 部署后，编辑“空间文件”下的`Dockerfile`文件，将首行代码`FROM ghcr.io/tunmax/openclaw_computer:latest`修改为`FROM ghcr.io/tunmax/openclaw_computer:qwenpaw_latest`，然后在页面底部点击“提交修改”
+    3. 最后，在“设置”中点击“深度重启”即可
+- 切换使用 **Hermes 版镜像**：
+    1. 操作同 **QwenPaw 版镜像** 教程，仅需将`Dockerfile`文件首行最后的`:latest`改为`:hermes_latest`
+
+
+#### HuggingFace 部署教程：
+- 在 Spaces 仓库目录下添加 Dockerfile 文件，内容和本仓库中的文件一致，然后在“设置”中添加 `ROOT_PASSWD` 和 `MODELSCOPE_API_KEY` 两个环境变量，最后点击重启容器即可开始部署。
+- 将 Bucket 挂载在 `/mnt/workspace` 路径下可激活本地自动备份/恢复特性
+- > 📌 注意：HuggingFace 似乎已不允许在免费硬件（CPU basic, 2vCPU 16GB RAM）的容器上部署 OpenClaw，当检测到容器内存在 OpenClaw 进程时会自动暂停容器，也无法重新启动容器（会出现 503 错误），预计需要切换至付费硬件（CPU upgrade, 8 vCPU 32GB RAM）才能继续使用。  
+  > 目前仅旧版 CoPaw 版镜像仍可以在 HF 的免费容器上部署，需将 Dockerfile 的首行代码改为 `FROM ghcr.io/tunmax/openclaw_computer:copaw_latest` 
+
+#### ⚠️ 重要提醒
+在开源社区部署本容器时，请勿启动内网穿透相关服务，根据有关反馈和真实案例，HuggingFace Spaces 具备检测容器内是否运行内网穿透服务的能力，一旦检测到此类情况，容器将会被立即删除，相关账号也会面临被封禁的风险。对于 ModelScope Spaces 也请勿运行内网穿透相关服务。本容器仅用于 OpenClaw 的体验。
 
 ## 容器特性介绍
 1. 容器支持自动备份/恢复 OpenClaw 配置及部分预定义文件夹，具体包括：OpenClaw 配置目录（`/root/.openclaw`）、电脑桌面目录（`/root/Desktop`）、Codex 配置目录（`/root/.codex`）、Claude Code 配置目录（`/root/.claude`）、用户自定义启动脚本目录（`/root/bz-startup`）、zsh 历史记录文件（`/root/.zsh_history`）
