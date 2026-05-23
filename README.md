@@ -19,8 +19,8 @@ docker run -d \
   ghcr.io/tunmax/openclaw_computer:latest /entrypoint.sh
 ```
 - 激活自动备份/恢复特性：`docker run ... -v ./backups:/mnt/workspace ...`
-- **使用 QwenPaw 版本**：`docker run ... ghcr.io/tunmax/openclaw_computer:qwenpaw_latest`
-- **使用 Hermes 版本**：`docker run ... ghcr.io/tunmax/openclaw_computer:hermes_latest`
+- 使用 QwenPaw 版本：`docker run ... ghcr.io/tunmax/openclaw_computer:qwenpaw_latest`
+- 使用 Hermes 版本：`docker run ... ghcr.io/tunmax/openclaw_computer:hermes_latest`
 
 ## 运行容器（ModelScope/HuggingFace Spaces）
 
@@ -124,6 +124,7 @@ docker run -d \
 
 #### 2026-05-22
 1. OpenClaw 升级至 2026.5.20 版本
+2. 首选推理模型切换为 Ring-2.6-1T
 
 #### 2026-05-21
 1. OpenClaw 升级至 2026.5.19 版本
